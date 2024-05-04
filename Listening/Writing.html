@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <!-- <div>
+        <button type="button" onclick="light()">light</button>
+        <button type="button">dark</button>
+        <button type="button">gold</button>
+    </div> -->
+    <div class="header">
+        <div class="leftHeader">
+            <h2> IELTS</h2>
+            <span id="timer"></span>
+        </div>
+        <div class="rightHeader">
+            <div class="acsseblity">
+                <i class="fa-solid fa-question-circle"></i>
+                <span class="notif"></span>
+                <span class="setting"></span>
+            </div>
+            <div class="notebar">
+                <span class="showNote">
+                    <!-- need this Note start-->
+                    <button onclick="notedText()">++</button>
+                     <!-- need this Note end-->
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="innerContainer">
+        <div class="rolBox">
+            <div class="rols">
+                <h3>part 1</h3>
+                <span>Lorem ipsum dolor sit amet. 1-13</span>
+            </div>
+        </div>
+         <!-- need this Note start-->
+        <div class="noteBox_parent">
+            <ul class="noteBox">
+                
+            </ul>
+        </div>
+         <!-- need this Note end-->
+        <div class="test" id="buttons">
+            <div>
+                <button id="highlightButton">Highlight</button>
+                <button id="removeButton">removeHighlight</button>
+            </div>
+            
+            <div class="text" id="paragraph">
+                <h2>Lorem ipsum dolor sit amet consectetur.</h2>
+                <ul>
+                    <li>Lorem ipsum, dolor sit amet consectetur adip
+                        isicing elit. Maxime harum veritatis quibusdam accusantium asperiores reiciendis?</li>
+                <li>Reprehenderit aliquam aut eos, distinctio veritatis mollitia officia accus
+                    <br>antium, debitis aliquid commodi, accusamus molestias possimus?</li>
+                <li>Temporibus porro officiis exercitationem, recusandae soluta consequuntur doloremque optio labore perspiciatis iste, aut fugiat fuga!</li>
+                <li>Odit mollitia id, veniam assumenda, aut delectus enim esse ratione officia aspernatur eaque ipsa sit.</li>
+            </ul>
+            </div>
+            <div class="questionBox">
+                <div class="true-false">
+                    <h2>q1-6</h2>
+                    <span class="discription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque,
+                        delectus.</span>
+
+
+
+                    <div class="questions" data-number="0" id="question0">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">1</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question0" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question0" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question0" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="questions" data-number="1" id="question1">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">2</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked" alt="">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question1" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question1" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question1" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="questions" data-number="2" id="question2">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">3</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked" alt="">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question2" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question2" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question2" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="questions" data-number="3" id="question3">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">4</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked" alt="">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question3" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question3" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question3" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="questions" data-number="4" id="question4">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">5</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked" alt="">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question4" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question4" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question4" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="questions" data-number="5" id="question5">
+                        <div class="questionHeader">
+                            <div class="questionInner">
+                                <span class="rows">6</span>
+                                <span class="ask">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                            </div>
+                            <span class="markerQuestion">
+                                <img src="icons8-bookmark-50.png" class="unmarked" alt="">
+                                <img src="icons8-bookmark-50(1).png" alt="" class="hidden marked"></span>
+                        </div>
+                        <div class="answers">
+                            <label>
+                                <input type="radio" name="question5" value="true"> <span>true</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question5" value="false"><span>false</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="question5" value="notGiven"><span>not given</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="inputs">
+                    <h2>q1-6</h2>
+                    <span class="discription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque,
+                        delectus.</span>
+
+
+
+                    <div class="inputQuestions">
+                        <h2>Lorem, ipsum dolor.</h2>
+                        <ol>
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+
+
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+
+
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+
+                            <li class="inputQuestionsInner">
+                                <div class="everyInputQuestion">
+                                    <span class="inputquestbefore">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                        elit.
+                                        Praesentium, a!</span>
+                                    <input type="text" class="inputAnswers" value="1">
+                                    <span class="inputquestafter">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</span>
+                                </div>
+                                <span class="marker"></span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="nextprev">
+                    <a onclick="nextPrevClick()" href="#question5" class="btn prev">-</a>
+                    <a onclick="nextPrevClick()" href="#question1" class="btn next">+</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="pageintion">
+        <div class="pages active">
+            <h2>part 1</h2>
+            <div class="active">
+                <a href="#question0" class="qstNumberBox"><span class="qstNumber">1</span></a>
+                <a href="#question1" class="qstNumberBox"><span class="qstNumber">2</span></a>
+                <a href="#question2" class="qstNumberBox"><span class="qstNumber">3</span></a>
+                <a href="#question3" class="qstNumberBox"><span class="qstNumber">4</span></a>
+                <a href="#question4" class="qstNumberBox"><span class="qstNumber">5</span></a>
+                <a href="#question5" class="qstNumberBox"><span class="qstNumber">6</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">7</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">8</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">9</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">10</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">11</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">12</span></a>
+                <a href="" class="qstNumberBox"><span class="qstNumber">13</span></a>
+            </div>
+            <div class="show">
+                <span>0 of 13</span>
+            </div>
+        </div>
+        <div class="pages">
+            <h2>part 2</h2>
+
+            <div class="show">
+                <span>0 of 13</span>
+            </div>
+        </div>
+        <div class="pages">
+            <h2>part 3</h2>
+
+            <div class="show">
+                <span>0 of 13</span>
+            </div>
+        </div>
+    </div>
+<!-- 
+    <div class="footer">
+        <div></div>
+        <div>
+            <span class="time"></span>
+            <span class="battery"></span>
+            <span class="wifi"></span>
+            <span class="vol"></span>
+            <span class="exit">exit</span>
+
+        </div>
+    </div> -->
+
+
+
+    <script src="script.js">
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js">
+
+    </script>
+
+</body>
+
+</html>
