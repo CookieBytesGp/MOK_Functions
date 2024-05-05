@@ -75,6 +75,7 @@ var item_control = 1;
 function highlightText() {
   var emptyChecker = window.getSelection().toString().trim();
   var selectedText = window.getSelection();
+  if(document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0){
   // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
   if (selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement && emptyChecker !== ''){
   // چک کردن بدون br 
@@ -89,7 +90,7 @@ function highlightText() {
     var selection = window.getSelection().getRangeAt(0);
     selection.deleteContents();
     selection.insertNode(marked);
-  }}
+  }}}
   
 }
 
@@ -103,7 +104,9 @@ function removeHighlightText(sample) {
 
 document.addEventListener("contextmenu", function (event) {
   var selectedText = window.getSelection().toString().trim();
-  if (selectedText !== '') {
+  if (selectedText !== ''){
+  if(document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0){
+
     var highlightOption = document.getElementById("highlightButton");
     var removeHighlightOption = document.getElementById("removeButton");
     highlightOption.classList.add("highlighte_btn")
@@ -115,13 +118,15 @@ document.addEventListener("contextmenu", function (event) {
       highlightOption.style.display = "none ";
       removeHighlightOption.style.display = "none";
     };
-  }
+  }}
 });
 
 
 document.addEventListener("contextmenu", function (event) {
   var selectedText = window.getSelection().toString().trim();
-  if (selectedText !== '') {
+  if (selectedText !== ''){
+  if(document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0){
+
     event.preventDefault(); // Prevent the default context menu
     var highlightOption = document.getElementById("highlightButton");
     var removeHighlightOption = document.getElementById("removeButton");
@@ -145,7 +150,7 @@ document.addEventListener("contextmenu", function (event) {
       removeHighlightOption.style.display = "none";
       highlightOption.style.display = "none";
     };
-  }
+  }}
 });
 
 
@@ -156,6 +161,8 @@ function notedText(){
 
   var emptyChecker = window.getSelection().toString().trim();
  var selectedText = window.getSelection();
+ if(document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0){
+
   // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
   if ( emptyChecker !== '' && selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement  ){
   // چک کردن بدون br 
@@ -166,6 +173,7 @@ function notedText(){
     marked_Text.appendChild(sample);
     marked_Text.dataset.id = item_control;
     marked_Text.classList.add("highlighted_text");
+    marked_Text.classList.add("noted")
     item_control = item_control + 1;
     var selection = window.getSelection().getRangeAt(0);
     selection.deleteContents();
@@ -182,7 +190,7 @@ function notedText(){
       note_cotainer.classList.add("active");
       let clone =item.cloneNode(true);
       clone.classList.remove("highlighted_text");
-      clone.classList.add("Noted_text")
+      clone.classList.add("Noted_text");
       removeBTN.onclick = function (){
         let datsetgetter = clone.dataset.id;
         document.querySelector("mark.Noted_text[data-id='" + datsetgetter+ "']").remove();
@@ -198,7 +206,7 @@ function notedText(){
       noteBox.appendChild(note_cotainer);
 
     }
-  }}
+  }}}
 }
 
 

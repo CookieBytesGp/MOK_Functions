@@ -341,6 +341,10 @@ body * {
     background-color: yellow;
 }
 
+.highlighted_text.noted {
+    background-color: blue !important;
+}
+
 .remove_highlighte_btn,.highlighte_btn {
     position:absolute;
     background-color:white;
