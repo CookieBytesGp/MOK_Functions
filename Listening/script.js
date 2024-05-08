@@ -18,14 +18,6 @@ function light() {
 
 
 
-// function light() { var root = document.documentElement;
-//    root.style.setProperty('--backgroundColor','black') 
-//    console.log(root.style) }
-
-
-
-
-
 
 
 
@@ -75,140 +67,203 @@ var item_control = 1;
 function highlightText() {
   var emptyChecker = window.getSelection().toString().trim();
   var selectedText = window.getSelection();
-  if(document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0){
-  // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
-  if (selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement && emptyChecker !== ''){
-  // چک کردن بدون br 
-  if(Object.values(selectedText.getRangeAt(0).cloneContents().childNodes).every(itemwe => itemwe.nodeName !== "BR")){
- 
-    var marked = document.createElement("mark");
-    var sample = selectedText.getRangeAt(0).extractContents();
-    marked.appendChild(sample);
-    marked.dataset.id = item_control;
-    marked.classList.add("highlighted_text");
-    item_control = item_control + 1;
-    var selection = window.getSelection().getRangeAt(0);
-    selection.deleteContents();
-    selection.insertNode(marked);
-  }}}
-  
+  if (document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0) {
+    // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
+    if (selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement && emptyChecker !== '') {
+      // چک کردن بدون br 
+      if (Object.values(selectedText.getRangeAt(0).cloneContents().childNodes).every(itemwe => itemwe.nodeName !== "BR")) {
+
+        var marked = document.createElement("mark");
+        var sample = selectedText.getRangeAt(0).extractContents();
+        marked.appendChild(sample);
+        marked.dataset.id = item_control;
+        marked.classList.add("highlighted_text");
+        item_control = item_control + 1;
+        var selection = window.getSelection().getRangeAt(0);
+        selection.deleteContents();
+        selection.insertNode(marked);
+      }
+    }
+  }
+
 }
 
 
 function removeHighlightText(sample) {
   let innetText = sample.innerHTML;
   sample.outerHTML = innetText;
-  
 }
 
 
 document.addEventListener("contextmenu", function (event) {
-  var selectedText = window.getSelection().toString().trim();
-  if (selectedText !== ''){
-  if(document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0){
 
-    var highlightOption = document.getElementById("highlightButton");
-    var removeHighlightOption = document.getElementById("removeButton");
-    highlightOption.classList.add("highlighte_btn")
-    highlightOption.style.top = event.clientY + "px";
-    highlightOption.style.left = event.clientX + "px";
-    highlightOption.style.display = "block";
-    highlightOption.onclick = function () {
-      highlightText();
-      highlightOption.style.display = "none ";
-      removeHighlightOption.style.display = "none";
-    };
-  }}
+  var selectedText = window.getSelection().toString().trim();
+  var container_p = document.querySelector("#buttons>div");
+  var highlightOption = document.getElementById("highlightButton");
+  var removeHighlightOption = document.getElementById("removeButton");
+  var Note_Option = document.getElementById("note_btn");
+  var remove_Note_Option = document.getElementById("remove_Note_btn");
+
+  container_p.classList.add("context_menue");
+  highlightOption.classList.add("highlighte_btn")
+  removeHighlightOption.classList.add("remove_highlighte_btn");
+  Note_Option.onclick = function(){
+    notedText();
+    Note_Option.style.display = "none ";
+    remove_Note_Option.style.display = "none ";
+    container_p.style.display = "none ";
+    highlightOption.style.display = "none ";
+    removeHighlightOption.style.display = "none";
+  }
+  remove_Note_Option.onclick = function () {
+    var datsetgetter = window.getSelection().anchorNode.parentElement.closest(".noted").dataset.id;
+    var list_Parent = document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").parentNode;
+    document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
+    let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
+    document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
+    let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
+    let index = noted_texts.indexOf(data_sample);
+    noted_texts.splice(index, 1)
+    list_Parent.remove();
+    Note_Option.style.display = "none ";
+    remove_Note_Option.style.display = "none ";
+    container_p.style.display = "none ";
+    highlightOption.style.display = "none ";
+    removeHighlightOption.style.display = "none";
+  };
+  highlightOption.onclick = function () {
+    highlightText();
+    Note_Option.style.display = "none ";
+    remove_Note_Option.style.display = "none ";
+    container_p.style.display = "none ";
+    highlightOption.style.display = "none ";
+    removeHighlightOption.style.display = "none";
+  };
+
+  removeHighlightOption.onclick = function () {
+    var myitem = document.querySelectorAll(".highlighted_text");
+    var selected_Item = event.target.dataset.id;
+    myitem.forEach((item_test) => {
+      if (item_test.dataset.id == selected_Item) {
+        removeHighlightText(item_test);
+        if (noted_texts.includes(item_test)) {
+          let index = noted_texts.indexOf(item_test);
+          noted_texts.splice(index, 1);
+          document.querySelector("mark.Noted_text[data-id='" + selected_Item + "']").parentNode.remove();
+        }
+        Note_Option.style.display = "none ";
+        remove_Note_Option.style.display = "none ";
+        container_p.style.display = "none ";
+        highlightOption.style.display = "none ";
+        removeHighlightOption.style.display = "none";
+      }
+    })
+  };
+
+  if (selectedText !== '') {
+    if (document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0) {
+      if (window.getSelection().anchorNode.parentElement.tagName !== "MARK" && Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => !item?.classList?.contains("highlighted_text") && !item?.classList?.contains("noted"))) {
+        event.preventDefault(); // Prevent the default context menu
+        container_p.style = "flex-direction: column;display: flex;";
+        container_p.style.top = event.clientY + "px";
+        container_p.style.left = event.clientX + "px";
+        Note_Option.style.display = "block";
+        highlightOption.style.display = "block";
+      }
+      if (window.getSelection().anchorNode.parentElement.tagName == "MARK" || Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("highlighted_text"))) {
+
+        if (window.getSelection().anchorNode.parentElement.closest(".noted") ) {
+
+          event.preventDefault(); // Prevent the default context menu
+          container_p.style = "flex-direction: column;display: flex;";
+          container_p.style.top = event.clientY + "px";
+          container_p.style.left = event.clientX + "px";
+          remove_Note_Option.style.display = "block";
+        }
+        if (!window.getSelection().anchorNode.parentElement.closest(".noted")) {
+          event.preventDefault(); // Prevent the default context menu
+          container_p.style = "flex-direction: column;display: flex;";
+          container_p.style.top = event.clientY + "px";
+          container_p.style.left = event.clientX + "px";
+          removeHighlightOption.style.display = "block";
+          highlightOption.style.display = "none ";
+          Note_Option.style.display = "none ";
+          remove_Note_Option.style.display = "none ";
+
+        }
+      }
+    }
+  } else {
+    container_p.style.display = "none ";
+    highlightOption.style.display = "none ";
+    removeHighlightOption.style.display = "none";
+  }
 });
 
-
-document.addEventListener("contextmenu", function (event) {
-  var selectedText = window.getSelection().toString().trim();
-  if (selectedText !== ''){
-  if(document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0){
-
-    event.preventDefault(); // Prevent the default context menu
-    var highlightOption = document.getElementById("highlightButton");
-    var removeHighlightOption = document.getElementById("removeButton");
-    removeHighlightOption.classList.add("remove_highlighte_btn")
-    removeHighlightOption.style.top = event.clientY + 30 + "px";
-    removeHighlightOption.style.left = event.clientX + "px";
-    removeHighlightOption.style.display = "block";
-    removeHighlightOption.onclick = function () {
-      var myitem = document.querySelectorAll(".highlighted_text");
-      var selected_Item = event.target.dataset.id;
-      myitem.forEach((item_test) => {
-          if(item_test.dataset.id == selected_Item){
-            removeHighlightText(item_test);
-            if(noted_texts.includes(item_test)){
-              let index = noted_texts.indexOf(item_test);
-              noted_texts.splice(index , 1);
-              document.querySelector("mark.Noted_text[data-id='" + selected_Item+ "']").parentNode.remove();
-            }
-          }
-      })
-      removeHighlightOption.style.display = "none";
-      highlightOption.style.display = "none";
-    };
-  }}
-});
 
 
 // فانکشن Note
 var noted_texts = [];
-function notedText(){
+function notedText() {
   var noteBox = document.querySelector(".noteBox");
 
   var emptyChecker = window.getSelection().toString().trim();
- var selectedText = window.getSelection();
- if(document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0){
+  var selectedText = window.getSelection();
+  if (document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0) {
 
-  // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
-  if ( emptyChecker !== '' && selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement  ){
-  // چک کردن بدون br 
-  if(Object.values(selectedText.getRangeAt(0).cloneContents().childNodes).every(itemwe => itemwe.nodeName !== "BR")){
- 
-    var marked_Text = document.createElement("mark");
-    var sample = selectedText.getRangeAt(0).cloneContents();
-    marked_Text.appendChild(sample);
-    marked_Text.dataset.id = item_control;
-    marked_Text.classList.add("highlighted_text");
-    marked_Text.classList.add("noted")
-    item_control = item_control + 1;
-    var selection = window.getSelection().getRangeAt(0);
-    selection.deleteContents();
-    selection.insertNode(marked_Text);
-    noted_texts.push(marked_Text);
-    noteBox.innerHTML = "";
-    noteBox.classList.add("active")
-    for(let item of noted_texts){
-      var note_cotainer = document.createElement("li");
-      var removeBTN = document.createElement("button");
-      removeBTN.type =  "button";
-      removeBTN.innerHTML = "remove Note";
-      note_cotainer.classList.add("note_container");
-      note_cotainer.classList.add("active");
-      let clone =item.cloneNode(true);
-      clone.classList.remove("highlighted_text");
-      clone.classList.add("Noted_text");
-      removeBTN.onclick = function (){
-        let datsetgetter = clone.dataset.id;
-        document.querySelector("mark.Noted_text[data-id='" + datsetgetter+ "']").remove();
-        let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter+ "']").innerHTML;
-        document.querySelector("mark.highlighted_text[data-id='" + datsetgetter+ "']").outerHTML = Pure_data;
-        let abbas = noted_texts.find(x => x.dataset.id == datsetgetter);
-        let index = noted_texts.indexOf(abbas);
-        noted_texts.splice(index , 1)
-        removeBTN.parentNode.remove();
-      } 
-      note_cotainer.appendChild(clone);
-      note_cotainer.appendChild(removeBTN)
-      noteBox.appendChild(note_cotainer);
+    // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
+    if (emptyChecker !== '' && selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement) {
+      // چک کردن بدون br 
+      if (Object.values(selectedText.getRangeAt(0).cloneContents().childNodes).every(itemwe => itemwe.nodeName !== "BR")) {
 
+        var marked_Text = document.createElement("mark");
+        var sample = selectedText.getRangeAt(0).cloneContents();
+        marked_Text.appendChild(sample);
+        marked_Text.dataset.id = item_control;
+        marked_Text.classList.add("highlighted_text");
+        marked_Text.classList.add("noted")
+        item_control = item_control + 1;
+        var selection = window.getSelection().getRangeAt(0);
+        selection.deleteContents();
+        selection.insertNode(marked_Text);
+        noted_texts.push(marked_Text);
+        noteBox.innerHTML = "";
+        noteBox.classList.add("active")
+        for (let item of noted_texts) {
+          var note_cotainer = document.createElement("div");
+          var removeBTN = document.createElement("button");
+          removeBTN.type = "button";
+          removeBTN.innerHTML = "remove Note";
+          note_cotainer.classList.add("note_container");
+          note_cotainer.classList.add("active");
+          let clone = item.cloneNode(true);
+          clone.classList.remove("highlighted_text");
+          clone.classList.add("Noted_text");
+          removeBTN.onclick = function () {
+            let datsetgetter = clone.dataset.id;
+            document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
+            let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
+            document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
+            let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
+            let index = noted_texts.indexOf(data_sample);
+            noted_texts.splice(index, 1)
+            removeBTN.parentNode.remove();
+          }
+          note_cotainer.appendChild(clone);
+          let text_Box = document.createElement("textarea");
+          text_Box.classList.add("text_note_box");
+          
+          text_Box.placeholder = "pls write youre note here";
+          note_cotainer.appendChild(text_Box)
+          note_cotainer.appendChild(removeBTN);
+
+          noteBox.appendChild(note_cotainer);
+
+        }
+      }
     }
-  }}}
+  }
 }
-
 
 
 
