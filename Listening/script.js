@@ -107,7 +107,7 @@ document.addEventListener("contextmenu", function (event) {
   container_p.classList.add("context_menue");
   highlightOption.classList.add("highlighte_btn")
   removeHighlightOption.classList.add("remove_highlighte_btn");
-  Note_Option.onclick = function(){
+  Note_Option.onclick = function () {
     notedText();
     Note_Option.style.display = "none ";
     remove_Note_Option.style.display = "none ";
@@ -116,20 +116,38 @@ document.addEventListener("contextmenu", function (event) {
     removeHighlightOption.style.display = "none";
   }
   remove_Note_Option.onclick = function () {
-    var datsetgetter = window.getSelection().anchorNode.parentElement.closest(".noted").dataset.id;
-    var list_Parent = document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").parentNode;
-    document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
-    let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
-    document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
-    let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
-    let index = noted_texts.indexOf(data_sample);
-    noted_texts.splice(index, 1)
-    list_Parent.remove();
-    Note_Option.style.display = "none ";
-    remove_Note_Option.style.display = "none ";
-    container_p.style.display = "none ";
-    highlightOption.style.display = "none ";
-    removeHighlightOption.style.display = "none";
+    if (window.getSelection().anchorNode.parentElement.closest(".noted")) {
+
+      var datsetgetter = window.getSelection().anchorNode.parentElement.closest(".noted").dataset.id;
+      var list_Parent = document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").parentNode;
+      document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
+      let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
+      document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
+      let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
+      let index = noted_texts.indexOf(data_sample);
+      noted_texts.splice(index, 1)
+      list_Parent.remove();
+      Note_Option.style.display = "none ";
+      remove_Note_Option.style.display = "none ";
+      container_p.style.display = "none ";
+      highlightOption.style.display = "none ";
+      removeHighlightOption.style.display = "none";
+    } else {
+      var datsetgetter = Object.values(window.getSelection().getRangeAt(0).cloneContents().children).find(x => x.classList.contains("noted")).dataset.id;
+      var list_Parent = document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").parentNode;
+      document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
+      let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
+      document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
+      let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
+      let index = noted_texts.indexOf(data_sample);
+      noted_texts.splice(index, 1)
+      list_Parent.remove();
+      Note_Option.style.display = "none ";
+      remove_Note_Option.style.display = "none ";
+      container_p.style.display = "none ";
+      highlightOption.style.display = "none ";
+      removeHighlightOption.style.display = "none";
+    }
   };
   highlightOption.onclick = function () {
     highlightText();
@@ -141,28 +159,49 @@ document.addEventListener("contextmenu", function (event) {
   };
 
   removeHighlightOption.onclick = function () {
-    var myitem = document.querySelectorAll(".highlighted_text");
-    var selected_Item = event.target.dataset.id;
-    myitem.forEach((item_test) => {
-      if (item_test.dataset.id == selected_Item) {
-        removeHighlightText(item_test);
-        if (noted_texts.includes(item_test)) {
-          let index = noted_texts.indexOf(item_test);
-          noted_texts.splice(index, 1);
-          document.querySelector("mark.Noted_text[data-id='" + selected_Item + "']").parentNode.remove();
+    if (event.target.dataset.id) {
+      var myitem = document.querySelectorAll(".highlighted_text");
+      var selected_Item = event.target.dataset.id;
+      myitem.forEach((item_test) => {
+        if (item_test.dataset.id == selected_Item) {
+          removeHighlightText(item_test);
+          if (noted_texts.includes(item_test)) {
+            let index = noted_texts.indexOf(item_test);
+            noted_texts.splice(index, 1);
+            document.querySelector("mark.Noted_text[data-id='" + selected_Item + "']").parentNode.remove();
+          }
+          Note_Option.style.display = "none ";
+          remove_Note_Option.style.display = "none ";
+          container_p.style.display = "none ";
+          highlightOption.style.display = "none ";
+          removeHighlightOption.style.display = "none";
         }
-        Note_Option.style.display = "none ";
-        remove_Note_Option.style.display = "none ";
-        container_p.style.display = "none ";
-        highlightOption.style.display = "none ";
-        removeHighlightOption.style.display = "none";
-      }
-    })
+      })
+    } else {
+      var selected_Item = Object.values(window.getSelection().getRangeAt(0).cloneContents().children).find(x => x.classList.contains("highlighted_text")).dataset.id;
+      var myitem = document.querySelectorAll(".highlighted_text");
+      myitem.forEach((item_test) => {
+        if (item_test.dataset.id == selected_Item) {
+          removeHighlightText(item_test);
+          if (noted_texts.includes(item_test)) {
+            let index = noted_texts.indexOf(item_test);
+            noted_texts.splice(index, 1);
+            document.querySelector("mark.Noted_text[data-id='" + selected_Item + "']").parentNode.remove();
+          }
+          Note_Option.style.display = "none ";
+          remove_Note_Option.style.display = "none ";
+          container_p.style.display = "none ";
+          highlightOption.style.display = "none ";
+          removeHighlightOption.style.display = "none";
+        }
+      })
+    }
   };
+
 
   if (selectedText !== '') {
     if (document.querySelector("#paragraph").getElementsByTagName(window.getSelection().anchorNode.parentElement.tagName).length > 0) {
-      if (window.getSelection().anchorNode.parentElement.tagName !== "MARK" && Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => !item?.classList?.contains("highlighted_text") && !item?.classList?.contains("noted"))) {
+      if (window.getSelection().anchorNode.parentElement.tagName !== "MARK" && Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => !item?.classList?.contains("highlighted_text")) && Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).every(item => !item?.classList?.contains("noted"))) {
         event.preventDefault(); // Prevent the default context menu
         container_p.style = "flex-direction: column;display: flex;";
         container_p.style.top = event.clientY + "px";
@@ -172,7 +211,7 @@ document.addEventListener("contextmenu", function (event) {
       }
       if (window.getSelection().anchorNode.parentElement.tagName == "MARK" || Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("highlighted_text"))) {
 
-        if (window.getSelection().anchorNode.parentElement.closest(".noted") ) {
+        if (window.getSelection().anchorNode.parentElement.closest(".noted") || Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("noted"))) {
 
           event.preventDefault(); // Prevent the default context menu
           container_p.style = "flex-direction: column;display: flex;";
@@ -180,7 +219,7 @@ document.addEventListener("contextmenu", function (event) {
           container_p.style.left = event.clientX + "px";
           remove_Note_Option.style.display = "block";
         }
-        if (!window.getSelection().anchorNode.parentElement.closest(".noted")) {
+        if (!window.getSelection().anchorNode.parentElement.closest(".noted") && !Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("noted"))) {
           event.preventDefault(); // Prevent the default context menu
           container_p.style = "flex-direction: column;display: flex;";
           container_p.style.top = event.clientY + "px";
@@ -252,7 +291,7 @@ function notedText() {
           note_cotainer.appendChild(clone);
           let text_Box = document.createElement("textarea");
           text_Box.classList.add("text_note_box");
-          
+
           text_Box.placeholder = "pls write youre note here";
           note_cotainer.appendChild(text_Box)
           note_cotainer.appendChild(removeBTN);
