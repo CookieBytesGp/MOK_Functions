@@ -107,10 +107,6 @@
 .note_container button:hover{
     background-color: wheat;
 }
-.note_container textarea{
-    min-width: 260px;
-    min-height: 150px;
-}
 .Noted_text{
     background-color: cyan;
     padding: .25rem;
@@ -118,4 +114,7 @@
 @keyframes slideLeft{
     from{margin-left: 100%;}
     to{margin-left: 0%;}
+}
+.isShow{
+    display: none;
 }

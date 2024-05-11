@@ -27,7 +27,6 @@ function highlightText() {
       }
     }
   }
-
 }
 
 
@@ -38,14 +37,12 @@ function removeHighlightText(sample) {
 
 
 document.addEventListener("contextmenu", function (event) {
-
   var selectedText = window.getSelection().toString().trim();
   var container_p = document.querySelector("#buttons>div");
   var highlightOption = document.getElementById("highlightButton");
   var removeHighlightOption = document.getElementById("removeButton");
   var Note_Option = document.getElementById("note_btn");
   var remove_Note_Option = document.getElementById("remove_Note_btn");
-
   container_p.classList.add("context_menue");
   highlightOption.classList.add("highlighte_btn")
   removeHighlightOption.classList.add("remove_highlighte_btn");
@@ -59,7 +56,6 @@ document.addEventListener("contextmenu", function (event) {
   }
   remove_Note_Option.onclick = function () {
     if (window.getSelection().anchorNode.parentElement.closest(".noted")) {
-
       var datsetgetter = window.getSelection().anchorNode.parentElement.closest(".noted").dataset.id;
       var list_Parent = document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").parentNode;
       document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
@@ -152,9 +148,7 @@ document.addEventListener("contextmenu", function (event) {
         highlightOption.style.display = "block";
       }
       if (window.getSelection().anchorNode.parentElement.tagName == "MARK" || Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("highlighted_text"))) {
-
         if (window.getSelection().anchorNode.parentElement.closest(".noted") || Object.values(window.getSelection().getRangeAt(0).cloneContents().childNodes).some(item => item?.classList?.contains("noted"))) {
-
           event.preventDefault(); // Prevent the default context menu
           container_p.style = "flex-direction: column;display: flex;";
           container_p.style.top = event.clientY + "px";
@@ -185,25 +179,22 @@ document.addEventListener("contextmenu", function (event) {
 
 // فانکشن Note
 var noted_texts = [];
+var noted_text_sampleTexts = [];
 function notedText() {
   var noteBox = document.querySelector(".noteBox");
-
   var emptyChecker = window.getSelection().toString().trim();
   var selectedText = window.getSelection();
   if (document.querySelector("#paragraph").getElementsByTagName(selectedText.anchorNode.parentElement.tagName).length > 0) {
-
     // چک کردن بودن بین دوتا تگ نه مجموع دو تگ مثلا متن بین li یا p
     if (emptyChecker !== '' && selectedText.anchorNode.parentElement == selectedText.focusNode.parentElement) {
       // چک کردن بدون br 
       if (Object.values(selectedText.getRangeAt(0).cloneContents().childNodes).every(itemwe => itemwe.nodeName !== "BR")) {
-
         var marked_Text = document.createElement("mark");
         var sample = selectedText.getRangeAt(0).cloneContents();
         marked_Text.appendChild(sample);
         marked_Text.dataset.id = item_control;
         marked_Text.classList.add("highlighted_text");
         marked_Text.classList.add("noted")
-        item_control = item_control + 1;
         var selection = window.getSelection().getRangeAt(0);
         selection.deleteContents();
         selection.insertNode(marked_Text);
@@ -222,27 +213,46 @@ function notedText() {
           clone.classList.add("Noted_text");
           removeBTN.onclick = function () {
             let datsetgetter = clone.dataset.id;
-            document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
             let Pure_data = document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").innerHTML;
+            document.querySelector("mark.Noted_text[data-id='" + datsetgetter + "']").remove();
             document.querySelector("mark.highlighted_text[data-id='" + datsetgetter + "']").outerHTML = Pure_data;
             let data_sample = noted_texts.find(x => x.dataset.id == datsetgetter);
             let index = noted_texts.indexOf(data_sample);
-            noted_texts.splice(index, 1)
-            removeBTN.parentNode.remove();
+            noted_texts.splice(index, 1);
+            event.target.parentNode.remove();
           }
           note_cotainer.appendChild(clone);
-          let text_Box = document.createElement("textarea");
-          text_Box.classList.add("text_note_box");
-
-          text_Box.placeholder = "pls write youre note here";
-          note_cotainer.appendChild(text_Box)
-          note_cotainer.appendChild(removeBTN);
-
-          noteBox.appendChild(note_cotainer);
-
+          if(!noted_text_sampleTexts.find(x => x.dataset.id  == item.dataset.id )){            
+            let text_Box = document.createElement("textarea");
+            text_Box.classList.add("text_note_box");
+            text_Box.dataset.id = item_control;
+            text_Box.value = "";
+            text_Box.placeholder = "pls write youre note here";
+            text_Box.onkeydown = function (){
+              note_edited = event.target.value;
+              datset_getter_Note = event.target.dataset.id;
+              let data_sample_note = noted_text_sampleTexts.find(x => x.dataset.id == datset_getter_Note);
+              let indexNote = noted_text_sampleTexts.indexOf(data_sample_note);
+              noted_text_sampleTexts[indexNote].value = note_edited;
+            };
+            noted_text_sampleTexts.push(text_Box);
+            note_cotainer.appendChild(text_Box);
+            note_cotainer.appendChild(removeBTN);
+            noteBox.appendChild(note_cotainer);
+            item_control = item_control + 1;
+  
+          }else{
+            let text_Box = noted_text_sampleTexts.find(x => x.dataset.id  == item.dataset.id );
+            note_cotainer.appendChild(text_Box);
+            note_cotainer.appendChild(removeBTN);
+            noteBox.appendChild(note_cotainer);
+          }
         }
       }
     }
   }
 }
 
+function notedshow(){
+  document.querySelector(".noteBox_parent").classList.toggle("isShow")
+}
